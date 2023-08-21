@@ -105,7 +105,7 @@ export default function SearchChat() {
             {isLoading ? (
               <>Loading...</>
             ) : filteredUsers.length === 0 ? (
-              <li className="">User not found</li>
+              <li className="p-3 text-center">User not found</li>
             ) : (
               filteredUsers.map((user) => (
                 <li
@@ -122,9 +122,9 @@ export default function SearchChat() {
                     <p className="text-lg font-bold text-grey-darkest">
                       {user.displayName}
                     </p>
-                    <p className="text-sm text-slate-400 truncate">
+                    {/* <p className="text-sm text-slate-400 truncate">
                       How are you?
-                    </p>
+                    </p> */}
                   </div>
                 </li>
               ))

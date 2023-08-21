@@ -28,21 +28,21 @@ export const AuthProvider = ({ children }) => {
     return createUserWithEmailAndPassword(auth, email, password).then(
       (userCredential) => {
         const user = userCredential.user;
-  
+
         // Send email verification immediately after user creation
         return sendEmailVerification(user).then(() => {
           const joined = new Date();
           return updateProfile(user, { displayName: displayName }).then(() => {
             if (profilePicture) {
               // ...existing code...
-  
+
               // Upload the profile picture and update user profile
               const storageRef = ref(storage, `/profile_images/${user.uid}`);
               return uploadBytes(storageRef, profilePicture)
                 .then((snapshot) => getDownloadURL(snapshot.ref))
                 .then((photoURL) => {
                   updateProfile(user, { photoURL });
-  
+
                   // Store user data in Firestore
                   const userRef = doc(db, "users", user.uid);
                   return setDoc(userRef, {
@@ -75,6 +75,32 @@ export const AuthProvider = ({ children }) => {
   // signout
   const logout = () => signOut(auth);
 
+  // set currentUser
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        const presenceRef = doc(db, "presence", user.uid);
+        setDoc(presenceRef, {
+          online: true,
+          lastActive: new Date(),
+        });
+      }
+      setCurrentUser(user);
+      setLoading(false);
+    });
+
+    return () => {
+      if (currentUser) {
+        const presenceRef = doc(db, "presence", currentUser.uid);
+        setDoc(presenceRef, {
+          online: false,
+          lastActive: new Date(),
+        });
+      }
+      unsubscribe();
+    };
+  }, [currentUser]);
+
   const value = {
     currentUser,
     setCurrentUser,
@@ -83,16 +109,6 @@ export const AuthProvider = ({ children }) => {
     signinWithGoogle,
     logout,
   };
-
-  // set currentUser
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      setCurrentUser(user);
-      setLoading(false);
-    });
-
-    return unsubscribe;
-  }, []);
 
   return (
     <AuthContext.Provider value={value}>

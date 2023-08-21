@@ -46,6 +46,7 @@ select:focus ~ label {
   overflow-y: auto;
   padding-bottom: 120px;
   background-color: #1d232a;
+  z-index: 1;
 }
 .upload-btn-wrapper {
   position: relative;
@@ -86,8 +87,9 @@ select:focus ~ label {
   min-height: 50px;
 }
 
-.messageInput, .messageNavbar {
-  background-color: #1D232A;
+.messageInput,
+.messageNavbar {
+  background-color: #1d232a;
 }
 
 .chat_container {

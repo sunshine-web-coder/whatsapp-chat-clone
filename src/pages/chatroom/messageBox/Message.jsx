@@ -3,7 +3,7 @@ import { ChatContext } from "../../../context/ChatContext";
 import { doc, onSnapshot, updateDoc } from "firebase/firestore";
 import { db } from "../../../firebase";
 import { UserAuth } from "../../../context/AuthContext";
-import { Button, Popover, Space } from "antd";
+import { Popover } from "antd";
 
 export default function Message() {
   const { currentUser } = UserAuth();
@@ -64,14 +64,14 @@ export default function Message() {
                 </div>
               </div>
               <div className="chat-box rounded">
-                <div className="text_message relative gap-2 p-3 pb-1 pt-1 max-w-lg">
+                <div className="relative p-3 pb-1 pt-1 max-w-lg">
                   {/* <p>Wale</p> */}
                   <div className="flex justify-between w-full">
-                    <span>{message.text}</span>{" "}
-                    <div>
+                    <p className="break-all">{message.text}</p>{" "}
+                    {/* <div>
                       {message.senderId === currentUser.uid && (
                         <Popover
-                        placement="bottom"
+                          placement="bottom"
                           content={
                             <button
                               onClick={() => handleDeleteMessage(message.id)}
@@ -85,10 +85,10 @@ export default function Message() {
                           <i className="fa-solid cursor-pointer fa-angle-down ml-4"></i>
                         </Popover>
                       )}
-                    </div>
+                    </div> */}
                   </div>
                   {!message.img && (
-                    <div className="text-xs w-14 h-5 flex justify-end absolute right-3 top-7">
+                    <div className="text-xs w-full flex justify-end">
                       {new Date(message.date.seconds * 1000).toLocaleTimeString(
                         [],
                         {

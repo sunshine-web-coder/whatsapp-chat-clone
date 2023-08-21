@@ -19,11 +19,12 @@ export default function NavBar() {
 
   return (
     <div className="py-2 px-3 bg-grey-lighter flex flex-row justify-between items-center">
-      <div>
+      <div className="flex gap-3 items-center">
         <img className="w-10 h-10 rounded-full" src={currentUser.photoURL} />
+        <span>{currentUser.displayName}</span>
       </div>
       <div className="flex">
-        <div>
+        {/* <div>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
@@ -51,7 +52,7 @@ export default function NavBar() {
               d="M19.005 3.175H4.674C3.642 3.175 3 3.789 3 4.821V21.02l3.544-3.514h12.461c1.033 0 2.064-1.06 2.064-2.093V4.821c-.001-1.032-1.032-1.646-2.064-1.646zm-4.989 9.869H7.041V11.1h6.975v1.944zm3-4H7.041V7.1h9.975v1.944z"
             />
           </svg>
-        </div>
+        </div> */}
         <Popover
           placement="bottomRight"
           // title={text}
